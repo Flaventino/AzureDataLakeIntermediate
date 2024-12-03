@@ -1,2 +1,4 @@
 # AzureDataLakeIntermediate
-This repository's purpose is to explore a bit deeper security about infrastructure deployment as well as about resource usages.
+The goal of this repository is to explore security a little deeper:
+* Security related to the deployment of the infrastructure.
+* Security also related to the uses of resources (such as access to the data lake for example).
