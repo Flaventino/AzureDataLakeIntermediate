@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "azuredatalakeintermediate"
+version = "0.1.0"
+description = ""
+authors = ["arnaud_pesenti <arnaud_pesenti@yahoo.fr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+azure-identity = "^1.19.0"
+azure-keyvault-secrets = "^4.9.0"
+azure-storage-blob = "^12.24.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
