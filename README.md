@@ -12,10 +12,18 @@ The first try we'gona do is trying to upload files from our local machine to an 
     + A datalake of "Gen2" type
 
 ### Programming & Coding resources
-* Python 3.11
+* Python version 3.11 and following python libraries :
     + azure-identity
     + azure-keyvault-secrets
     + azure-storage-blob
+* A '.env' file to safely enclose sensitive data
+    + File location : <project_root>
+    + Sensitive data to fill in the file (respect cases !):
+        + `KEYVAULT_NAME            = <your keyvault name>`
+        + `DATALAKE_NAME            = <your datalake name>`
+        + `KEYVAULT_CLIENT_ID       = <your keyvault client id>`
+        + `KEYVAULT_CLIENT_SECRET   = <your keyvault client secret>`
+        + `KEYVAULT_TENANT_ID       = <your keyvault tenant id>`
 
 While it is never mandatory to work with a virtual environment,<br>
 I personally prefer to manage python libraries more easily and reliably with poetry.<br>
