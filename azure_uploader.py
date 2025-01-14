@@ -4,6 +4,7 @@
 from azure.identity import ClientSecretCredential
 from azure.storage.blob import BlobServiceClient
 from azure.keyvault.secrets import SecretClient
+from backup.credentials import getenv
 
 # Service principal credentials for sp-keyvault-brief
 # # KEYVAULT_CLIENT_ID = os.getenv("KEYVAULT_CLIENT_ID")  # "sp-keyvault-brief" client ID
@@ -14,6 +15,7 @@ from azure.keyvault.secrets import SecretClient
 # KEYVAULT_CLIENT_ID     = ...      # "sp-keyvault-brief" client ID
 # KEYVAULT_CLIENT_SECRET = ...      # Secret for "sp-keyvault-brief"
 # KEYVAULT_TENANT_ID     = ...      # Tenant ID
+print(getenv("KEYVAULT_NAME"))
 
 # # Key Vault and Data Lake details
 KEYVAULT_URL            = f"https://{KEYVAULT_NAME}.vault.azure.net/"
