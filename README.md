@@ -2,7 +2,9 @@
 The goal of this repository is to explore security, a little deeper, accross azure cloud resources uses.
 
 ## First goal
-The first try we'gona do is trying to upload files from our local machine to an azure's datalake
+The first try we'gona do is trying to upload files from our local machine to an azure's datalake.<br>
+For ease we will consider only a single one data lake as well as only a single one keyvault all accross this project.<br>
+Thus Any interacction with a keyvault or a datalake will allways be with the same keyvault of datalake exclusively.
 
 ## Requirements
 ### Azure resources & services
@@ -19,7 +21,7 @@ The first try we'gona do is trying to upload files from our local machine to an 
         + The application ID of the service principal responsible for monitoring access to the data lake
         + The secret value of the service principal responsible for monitoring access to the data lake
     
-    + A datalake of "Gen2" type
+    + A datalake of "Gen2" type with one container at least. You also can create a directory within that container if you whish.
 
 ### Programming & Coding resources
 * Python version 3.11 and following python libraries :

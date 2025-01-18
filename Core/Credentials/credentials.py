@@ -15,6 +15,7 @@ def getenv(passname):
     """
     return dotenv_values().get(passname)
 
+
 def get_secret(secret_name):
     """
     Returns a secret from the keyvault corresponding to the given secret name.
@@ -33,3 +34,22 @@ def get_secret(secret_name):
     
     # FUNCTION OUOTPUT (Required secrcet value from the keyvault)
     return keyvault.get_secret(secret_name).value
+
+
+def get_datalake_credentials():
+    """
+    Simply returns the credential object required to connect the datalake.
+    No arguments required so far ! 
+    """
+
+    # INITIALIZATION & BASIC SETTINGS (i.e. credential secret names)
+    secret_names = ('TENANT_ID',
+                    'DATALAKE_CLIENT_ID',
+                    'DATALAKE_CLIENT_SECRET_NAME')
+
+    # GETS THE CREDENTIAL SECRET VALUES
+    secret_values = [getenv(name) for name in secret_names]
+    secret_values[1:] = [get_secret(kv_name) for kv_name in secret_values[1:]]
+
+    # FUNCTION OUTPUT (returns the datalake credentials object)
+    return ClientSecretCredential(*secret_values)
