@@ -28,7 +28,7 @@ The first try we'gona do is trying to upload files from our local machine to an 
     + azure-storage-blob
     + python-dotenv
 * A '.env' file to safely enclose sensitive data.
-    + File location : <project_root>/Credentials/.env
+    + File location : <project_root>/Core/Credentials/.env
     + Sensitive data to add to the file (Be careful, respect the case!):
         + `TENANT_ID                  = <your-tenant-id>`
             - The unique Tenant ID of your Azure Active Directory (AAD) instance.<br>
