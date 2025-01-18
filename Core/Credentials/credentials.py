@@ -2,6 +2,7 @@ from dotenv import dotenv_values
 from azure.identity import ClientSecretCredential
 from azure.keyvault.secrets import SecretClient
 
+# SECRETS & CREDENTIALS RECOVERY FUNCTIONS
 def getenv(passname):
     """
     Returns the secret corresponding to the given password name.
