@@ -20,7 +20,9 @@ def get_file_paths(path):
     if os.path.isfile(path):
         paths.append(path)
     elif os.path.isdir(path):
+        # LIST ALL ITEMS IN THE DIRECTORY
         paths = [os.path.join(filename) for filename in os.listdir(path)]
+        # KEEPS FULL PATHS FOR ALL ITEMS BEING FILES EXCLUSIVELY
         paths = [path for path in paths if os.path.isfile(path)]
 
     # FUNCTON OUTPUT

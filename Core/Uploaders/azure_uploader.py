@@ -34,3 +34,6 @@ def upload_file(file_path, container, dir_path=None):
         blob = open(path, "rb").read()
         filename = os.path.basename(path)
         client.get_file_client(filename).upload_data(blob, overwrite=True)
+
+
+upload_file('/home/user/AzureDataLakeIntermediate', 'data', dir_path=None)
