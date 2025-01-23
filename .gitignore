@@ -171,5 +171,8 @@ cython_debug/
 # Temporary files and/or utilities not to be tracked
 .backup/
 
+# Data files not to be tracked
+Data/
+
 # Project IDX files
 .idx/
