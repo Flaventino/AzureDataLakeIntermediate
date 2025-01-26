@@ -1,4 +1,4 @@
-import os, inspect
+import os, inspect, re
 
 # HELPER FUNCTIONS
 def get_file_paths(path):
@@ -41,9 +41,10 @@ def parse_the_docstring():
     """
 
     # BASIC SETTINGS & INITIALIZATION (retrieve the docstring to be parsed)
-    regex = r'(?i)(?<=.`).*(?=`)'              # Regex used to get column names
-    function = inspect.stack()[1].function     # Gets the calling function name
-    docstring = eval(f'{function}.__doc__')    # Gets the dosctring to parse
+    regex = r'(?i)(?<=.`).*(?=`)'                # Regex for docstring parsing
+    frame = inspect.stack()[1]                   # Get the caller's stack frame
+    function = frame[0].f_globals.get(frame[3])  # Get the target function name
+    docstring = function.__doc__                 # Gets the dosctring to parse
 
     # FUNCTION OUTPUT
     return re.findall(regex, docstring)
