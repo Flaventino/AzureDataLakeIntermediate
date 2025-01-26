@@ -30,7 +30,6 @@ Thus Any interacction with a keyvault or a datalake will allways be with the sam
     + azure-storage-blob
     + python-dotenv
     + beautifulsoup4
-    + scrapy
 * A '.env' file to safely enclose sensitive data.
     + File location : <project_root>/Core/Credentials/.env
     + Sensitive data to add to the file (Be careful, respect the case!):
