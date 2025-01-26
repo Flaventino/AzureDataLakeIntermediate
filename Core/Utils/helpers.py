@@ -1,9 +1,9 @@
-import os
+import os, inspect
 
 # HELPER FUNCTIONS
 def get_file_paths(path):
     """
-    Given a path, returns a python list of file paths.
+    Given a path, returns a python list of absolute file paths inside target.
 
     When the path is a single file path, output is just a one element list with
     that path. When the path is a directory path, then the output is a list of
@@ -27,3 +27,23 @@ def get_file_paths(path):
 
     # FUNCTON OUTPUT
     return paths
+
+
+def parse_the_docstring():
+    """
+    Parses a docstring and returns a list of  (no arguments required).
+
+    This function purpose is to be called from/by another function.
+    Once called, this function will parse the docstring of the function from
+    which it is called and return the url which is inside.
+    There is no magic, the url which have to be extracted from the
+    docstring must be encapsulated between backticks.
+    """
+
+    # BASIC SETTINGS & INITIALIZATION (retrieve the docstring to be parsed)
+    regex = r'(?i)(?<=.`).*(?=`)'              # Regex used to get column names
+    function = inspect.stack()[1].function     # Gets the calling function name
+    docstring = eval(f'{function}.__doc__')    # Gets the dosctring to parse
+
+    # FUNCTION OUTPUT
+    return re.findall(regex, docstring)
