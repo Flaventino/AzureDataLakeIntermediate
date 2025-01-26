@@ -12,7 +12,6 @@ azure-keyvault-secrets = "^4.9.0"
 python-dotenv = "^1.0.1"
 azure-storage-file-datalake = "^12.18.0"
 beautifulsoup4 = "^4.12.3"
-scrapy = "^2.12.0"
 
 
 [build-system]
