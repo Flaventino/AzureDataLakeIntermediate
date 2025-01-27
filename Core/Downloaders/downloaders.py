@@ -7,7 +7,7 @@ from Core.Utils.helpers import parse_the_docstring
 
 
 # MAIN FUNCTIONS
-def download_country_data(country, dest_folder=None):
+def download_country_data(country, dest_folder=None, max_file=None):
     """
     Downloads the given country data file(s) to the given destination folder.
 
@@ -18,6 +18,8 @@ def download_country_data(country, dest_folder=None):
         dest_folder (str, optional): The local folder path to save the file. 
                 Defaults to "../../Data/Downloads", which is relative to the
                 script's location (e.g., `<script_loc>/../../Data/Downloads`).
+        max_file (int): Whether to limit the number of files to download.
+                        Defaults to None which means 'no limit' or 'all files'.
 
     Returns:
         None: Downloads the file and saves it to the specified folder.
@@ -42,16 +44,19 @@ def download_country_data(country, dest_folder=None):
         url = tag['href']                          # Extract sub-url from `tag`
         filename = get_filename(url, country, ext) # Change url into a filename
 
-        if filename and urlsplit(url).netloc == netloc:
-            count += 1
-            download_file(url, folder, filename)   # Write file on disk
+        if filename and urlsplit(url).netloc == netloc:  # download cond. met ?
+            count += 1                                   # Download counter
+            download_file(url, folder, filename)         # Write file on disk
+
+        if max_file and count >= max_file:               # Download limit met ?
+            break
     
     # FUNCTION FEEDBACK TO LOG
     print("\033[K", end="")                              # Clear the first line
     print(f"\nDownload complete.\n>>> {count} files downloaded in: {folder}")
 
 
-def download_amazon_products_data(dest_folder=None):
+def download_amazon_products_data(dest_folder=None, max_file=None):
     """
     Downloads Amazon product data file(s) to the specified destination folder.
 
@@ -67,6 +72,8 @@ def download_amazon_products_data(dest_folder=None):
         dest_folder (str, optional): The local folder path where the file(s) will
             be saved. Defaults to "../../Data/Downloads", relative to the script's
             location (e.g., `<script_location>/../../Data/Downloads`).
+        max_file (int): Whether to limit the number of files to download.
+                        Defaults to None which means 'no limit' or 'all files'.
 
     Returns:
         None: Downloads the data file(s) and saves them to the specified folder.
@@ -105,6 +112,9 @@ def download_amazon_products_data(dest_folder=None):
         # Downloads file
         count += 1
         download_file(url, folder, filename)   # Write file on disk
+
+        if max_file and count >= max_file:               # Download limit met ?
+            break
     
     # FUNCTION FEEDBACK TO LOG
     print("\033[K", end="")                              # Clear the first line
@@ -266,5 +276,5 @@ def set_destination_directory(path=None):
     return folder
 
 
-#download_country_data('spain')
+#download_country_data('spain', max_file=3)
 #download_amazon_products_data(dest_folder=None)
