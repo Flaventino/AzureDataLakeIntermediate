@@ -176,3 +176,33 @@ Data/
 
 # Project IDX files
 .idx/
+
+###### ADDITIONS SECTION FOR TERRAFORM
+# 🚀 Terraform State & Sensitive Files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*_override.tf
+*_override.tf.json
+
+# 🚀 Terraform Cache & Modules
+.terraform/
+**/.terraform/modules/
+.terraform.lock.hcl
+
+# 🚀 Terraform Plan & Logs
+*.plan
+crash.log
+terraform.log
+
+# 🚀 Terraform Remote Backend & Config Files
+.terraformrc
+
+# 🚀 Environment & Secrets
+.env
+*.env
+setup.sh
+set_env.sh
+###### END OF ADDITIONS SECTION FOR TERRAFORM
