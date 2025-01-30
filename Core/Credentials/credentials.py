@@ -45,7 +45,7 @@ def get_datalake_credentials():
 
     # INITIALIZATION & BASIC SETTINGS (i.e. credential secret names)
     secret_names = ('TENANT_ID',
-                    'DATALAKE_CLIENT_ID',
+                    'DATALAKE_CLIENT_ID_NAME',
                     'DATALAKE_CLIENT_SECRET_NAME')
 
     # GETS THE CREDENTIAL SECRET VALUES
