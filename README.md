@@ -24,6 +24,8 @@ Thus Any interacction with a keyvault or a datalake will allways be with the sam
     + A datalake of "Gen2" type with one container at least. You also can create a directory within that container if you whish.
 
 ### Programming & Coding resources
+* terraform
+* azure-cli (so that terraform can deploy on azure)
 * Python version 3.11 and following python libraries :
     + azure-identity
     + azure-keyvault-secrets
@@ -46,11 +48,13 @@ Thus Any interacction with a keyvault or a datalake will allways be with the sam
             - The secret associated with the service principal for authenticating access to your Azure Key Vault.<br>
             This is generated when you create or configure your service principal in Azure.
         + `DATALAKE_NAME               = <your-datalake-name>`
-        + `DATALAKE_CLIENT_ID          = <secret-name-under-which-you-enclosed-the-service-principal-application-id>`
+        + `DATALAKE_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id>`
             - The Application ID of the service principal that is responsible for securing write access to your datalake.<br>
         + `DATALAKE_CONTAINER_NAME     = <the-name-of-the-target-container-within-your-datalake>`
         + `DATALAKE_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-client-secret>`
             - The secret associated with the service principal for authenticating write access to your datalake.<br>`
+        + `TERRAFORM_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id-dedicated-to-resources-deployment>`
+        + `TERRAFORM_CLIENT_SECRET_NAME = 'terraform2'`
 
 While it is never mandatory to work with a virtual environment,<br>
 I personally prefer to do it in order to manage python libraries & dependencies more easily and reliably with poetry.<br>
