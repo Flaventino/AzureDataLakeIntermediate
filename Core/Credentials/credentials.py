@@ -19,38 +19,49 @@ def getenv(passname):
 
 def get_secret(secret_name):
     """
-    Returns a secret from the keyvault corresponding to the given secret name.
+    Retrieves a secret from Azure Key Vault based on the provided secret name.
 
     Args:
-        secret_name (str): Name under which a secret is stored in the keyvault.
+        secret_name (str): The name of the secret stored in Azure Key Vault.
+
+    Returns:
+        str: The value of the requested secret.
     """
 
-    # GET KEYVAULT CREDENTIALS
-    labels = ['TENANT_ID', 'KEYVAULT_CLIENT_ID', 'KEYVAULT_CLIENT_SECRET']
-    kv_creds = ClientSecretCredential(*[getenv(label) for label in labels])
+    # INITIALIZATION & BASIC SETTINGS
+    # → Credential names used to authenticate with Azure Key Vault
+    secret_names = ('TENANT_ID','KEYVAULT_CLIENT_ID', 'KEYVAULT_CLIENT_SECRET')
 
-    # GET KEYVAULT ACCESS
+    # LOAD KEY VAULT CREDENTIAL VALUES FROM `.env` FILE
+    kv_creds = ClientSecretCredential(*[getenv(name) for name in secret_names])
+
+    # ESTABLISH KEY VAULT CLIENT CONNECTION
     kv_url = f"https://{getenv('KEYVAULT_NAME')}.vault.azure.net/"
     keyvault = SecretClient(vault_url=kv_url, credential=kv_creds)
-    
-    # FUNCTION OUOTPUT (Required secrcet value from the keyvault)
+
+    # RETURN THE SECRET VALUE FROM AZURE KEY VAULT
     return keyvault.get_secret(secret_name).value
 
 
 def get_datalake_credentials():
     """
-    Simply returns the credential object required to connect the datalake.
-    No arguments required so far ! 
+    Returns the credential object required to connect to the Data Lake.
+
+    Returns:
+        ClientSecretCredential: The credential object for authentication.
     """
 
-    # INITIALIZATION & BASIC SETTINGS (i.e. credential secret names)
+    # INITIALIZATION & BASIC SETTINGS
+    # → Credential names used to retrieve authentication secrets
     secret_names = ('TENANT_ID',
                     'DATALAKE_CLIENT_ID_NAME',
                     'DATALAKE_CLIENT_SECRET_NAME')
 
-    # GETS THE CREDENTIAL SECRET VALUES
+    # LOAD CREDENTIAL VALUES FROM `.env` FILE
     secret_values = [getenv(name) for name in secret_names]
+
+    # RETRIEVE CLIENT ID & SECRET FROM AZURE KEY VAULT
     secret_values[1:] = [get_secret(kv_name) for kv_name in secret_values[1:]]
 
-    # FUNCTION OUTPUT (returns the datalake credentials object)
+    # RETURN DATALAKE CREDENTIAL OBJECT
     return ClientSecretCredential(*secret_values)
