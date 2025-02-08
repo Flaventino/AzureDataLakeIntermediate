@@ -11,7 +11,8 @@ Thus Any interacction with a keyvault or a datalake will allways be with the sam
 * Two service principals each one with its own configured secret.
     + One in charge to secure keyvault access and querrying.<br>
     To do so, ensure yourself to go to the "access policies" section of the keyvault<br>
-    in order to grant a "get" access only of this service principal over the keyvault. 
+    in order to grant "get" and "set" accesses only of this service principal over the keyvault.
+    You also need to give the service principal a "reader" role onto the keyvault. This is defined on "Access Control (IAM)" of the keyvault. 
     + One for monitoring secure access to the data lake.
     So, once the service principal is in place, do not forget to give it a "Storage Blob Data Contributor" role.
     To do so, simply go to the datalake, under "Access control (IAM)", select "add" then the role and select the service principal. 
@@ -47,6 +48,7 @@ Thus Any interacction with a keyvault or a datalake will allways be with the sam
         + `KEYVAULT_CLIENT_SECRET      = <your-service-principal-client-secret>`
             - The secret associated with the service principal for authenticating access to your Azure Key Vault.<br>
             This is generated when you create or configure your service principal in Azure.
+        + `KEYVAULT_RESOURCE_GROUP_NAME= <your-main-resource-group-with-the-keyvault-to-use>`
         + `DATALAKE_NAME               = <your-datalake-name>`
         + `DATALAKE_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id>`
             - The Application ID of the service principal that is responsible for securing write access to your datalake.<br>
