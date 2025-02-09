@@ -33,8 +33,18 @@ export "TF_VAR_keyvaultClientID=${KEYVAULT_CLIENT_ID}"
 export "TF_VAR_keyvaultClientSecret=${KEYVAULT_CLIENT_SECRET}"
 
 ## EXPORT AUXILIARY CREDENTIALS (Secret names securely stored in Key Vault)
+### Terraform Authentication For Azure Resources Deployment
 export "TF_VAR_terraformerClientIdName=${TERRAFORMER_CLIENT_ID_NAME}"
 export "TF_VAR_terraformerClientSecretName=${TERRAFORMER_CLIENT_SECRET_NAME}"
-
-#SECRET NAMES
-# echo "Variables exportées"
+### Data Lake Authentication For Reading And Writing Files
+export "TF_VAR_datalakeClientIdName=${DATALAKE_CLIENT_ID_NAME}"
+export "TF_VAR_datalakeClientSecretName=${DATALAKE_CLIENT_SECRET_NAME}"
+## EXPORT OTHER DATA
+## Resource Group Configuration Details
+export "TF_VAR_projectRgName=${PROJECT_RESOURCE_GROUP_NAME}"
+export "TF_VAR_projectResourcesLocation=${PROJECT_RESOURCE_GROUP_LOCATION}"
+## Data Lake Configuration Details (only relevant one. For others, see terraform files)
+export "TF_VAR_projectDatalakeName=${DATALAKE_NAME}"
+export "TF_VAR_projectDatalakeContainerName=${DATALAKE_CONTAINER_NAME}"
+export "TF_VAR_projectFlatFilesDirectoryName=${DATALAKE_DIRECTORY_NAME_FOR_FLAT_FILES}"
+export "TF_VAR_projectParquetFilesDirectoryName=${DATALAKE_DIRECTORY_FOR_PARQUET_FILES}"
