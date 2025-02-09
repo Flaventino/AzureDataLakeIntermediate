@@ -68,6 +68,7 @@ files transfert function to move files from the web scraping machine (either a l
         + `DATALAKE_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id>`
             - The Application ID of the service principal that is responsible for securing write access to your datalake.<br>
         + `DATALAKE_CONTAINER_NAME     = <the-name-of-the-target-container-within-your-datalake>`
+            - Notice that only lower case alphanumeric characters and hyphens are allowed.
         + `DATALAKE_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-client-secret>`
             - The secret associated with the service principal for authenticating write access to your datalake.<br>`
         + `TERRAFORM_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id-dedicated-to-resources-deployment>`
