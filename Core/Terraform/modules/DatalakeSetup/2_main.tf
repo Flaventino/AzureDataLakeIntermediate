@@ -18,8 +18,25 @@ resource "azurerm_storage_account" "projectDataLake" {
     account_kind               = "StorageV2"     # Required for Data Lake Gen2.
     is_hns_enabled             = true            # Hierarchical Name Space for `Gen2`.
 
-    ## Data Lake & Apache Ecosystem Compatibility:
+    ## Data Lake & Apache Ecosystem Compatibility (Hadoop/Spark particularly):
     ## - HNS (Hierarchical Namespace) is required for optimized large file operations.
-    ## - Ensures compatibility with Apache Hadoop/Spark workloads.
-    ## - Supports file-level ACLs, allowing fine-grained permissions like HDFS.
+    }
+
+# CREATES A CONTAINER IN THE DATA LAKE (required to store files)
+resource "azurerm_storage_container" "rawWebDataContainer" {
+    name                  = var.projectDatalakeContainerName
+    storage_account_name  = azurerm_storage_account.projectDataLake.name
+    container_access_type = "private"       # So that files access is not public.
+    }
+
+# CREATES DIRECTORIES IN THE DATA LAKE'S CONTAINER (to organize raw data files)
+resource "azurerm_storage_data_lake_gen2_path" "containerDirectories" {
+    # Batch creation of directories
+    for_each = toset(var.projectDirectoryNames)
+    path     = each.value           # Allow multiple directories to be created.
+    
+    # Common settings for all directories
+    resource             = "directory"    # Resource type. So 'directory' here!
+    filesystem_name      = azurerm_storage_container.rawWebDataContainer.name
+    storage_account_id   = azurerm_storage_account.projectDataLake.id
     }

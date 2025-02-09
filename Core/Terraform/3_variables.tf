@@ -91,11 +91,11 @@ variable "projectDatalakeContainerName" {
   }
 variable "projectFlatFilesDirectoryName" {
   type        = string
-  sensitive   = true
+  sensitive   = false
   description = "Name of the directory within the storage container for flat files."
   }
 variable "projectParquetFilesDirectoryName" {
   type        = string
-  sensitive   = true
+  sensitive   = false
   description = "Name of the directory within the storage container for parquet files."
   }

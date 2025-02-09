@@ -30,10 +30,15 @@ module "DatalakeSetup" {
     azurerm = azurerm.terraformer
     }
   # Module variables
-  source                   = "./modules/DatalakeSetup"
-  projectRgName            = var.projectRgName
-  projectDatalakeName      = var.projectDatalakeName
-  projectResourcesLocation = var.projectResourcesLocation
-
+  ## Main variables
+  source                           = "./modules/DatalakeSetup"
+  projectRgName                    = var.projectRgName
+  projectDatalakeName              = var.projectDatalakeName
+  projectResourcesLocation         = var.projectResourcesLocation
+  projectDatalakeContainerName     = var.projectDatalakeContainerName
+  ## Name list of directories to create in the data lake
+  # projectFlatFilesDirectoryName    = var.projectFlatFilesDirectoryName
+  # projectParquetFilesDirectoryName = var.projectParquetFilesDirectoryName
+  projectDirectoryNames           = [var.projectFlatFilesDirectoryName,var.projectParquetFilesDirectoryName]
   depends_on = [ azurerm_resource_group.projectResourceGroup ]
-}
+  }
