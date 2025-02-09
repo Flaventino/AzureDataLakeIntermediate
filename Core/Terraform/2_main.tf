@@ -11,18 +11,29 @@ data "azurerm_key_vault_secret" "TerraformerID" {
   name         = var.terraformerClientIdName
   key_vault_id = data.azurerm_key_vault.Keyper.id
   }
-
 data "azurerm_key_vault_secret" "TerraformerSecret" {
   provider     = azurerm.keyvault
   name         = var.terraformerClientSecretName
   key_vault_id = data.azurerm_key_vault.Keyper.id
   }
-# RESOURCES DELOYMENT
 
+# PROJECT RESOURCE GROUP DEPLOYMENT
+resource "azurerm_resource_group" "projectResourceGroup" {
+  provider    = azurerm.terraformer
+  name        = var.projectRgName
+  location    = var.projectResourcesLocation
+  }
 
-# CREATES A NEW RESOURCE GROUP SETUP
-resource "azurerm_resource_group" "ResourcesGroup" {
-    provider    = azurerm.terraformer
-    name        = var.ResourceGroupName
-    location    = var.location
+# PROJECT DATA LAKE DEPLOYMENT
+module "DatalakeSetup" {
+  providers                = {
+    azurerm = azurerm.terraformer
+    }
+  # Module variables
+  source                   = "./modules/DatalakeSetup"
+  projectRgName            = var.projectRgName
+  projectDatalakeName      = var.projectDatalakeName
+  projectResourcesLocation = var.projectResourcesLocation
+
+  depends_on = [ azurerm_resource_group.projectResourceGroup ]
 }

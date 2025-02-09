@@ -3,16 +3,28 @@ terraform {
     required_version = ">=0.12"
 
     required_providers {
+      # Provider For Azure Active Directory Resources Management (i.e. Entra ID)
+      # >>> In order to manage service principals
+      azuread = {
+        source  = "hashicorp/azuread"
+        version = "~>2.0"
+        }
+      # Provider For Azure Resources Management (except Entra Id)
       azurerm = {
-          source  = "hashicorp/azurerm"
-          version = "~>3.0"
+        source  = "hashicorp/azurerm"
+        version = "~>3.0"
+        }
+      # Provider For Random Values Generation (Used for srvice principals secrets)
+      random = {
+        source  = "hashicorp/random"
+        version = "~>3.0"
+        }
       }
-    }
   }
 
 # LOADING PROVIDERS
-## Keyvault access provider
-## >>> Works via a service principal with `get` and `reader` roles exclusively.
+## Provider for Key Vault access
+## >>> Uses a service principal with 'Reader' and 'Get' roles only.
 provider "azurerm" {
   alias           = "keyvault"
 
@@ -25,8 +37,8 @@ provider "azurerm" {
   features {}
   }
 
-## Subscription access provider for ressources deployment
-## >>> Works via a service principal with `contributor` role on the subscription.
+## Provider for subscription-level resource deployment
+## >>> Works Uses a service principal with the 'Contributor' role at the subscription level.
 provider "azurerm" {
   alias           = "terraformer"
 
@@ -37,4 +49,8 @@ provider "azurerm" {
   subscription_id = var.subscriptionID
 
   features {}
+  }
+## Provider for password generation
+provider "random" {
+  alias = "passwordGenerator"
   }

@@ -40,26 +40,62 @@ variable "keyvaultClientSecret" {
 
 
 # AUXILIARY CREDENTIALS (secret names securely stored in Key Vault)
+## Terraform Authentication For Azure Resources Deployment 
 variable "terraformerClientIdName" {
   type        = string
   sensitive   = true
-  description = "Client ID of the service principal used by Terraform to deploy resources."
+  description = "Key vault secret name for Terraform service principal client ID."
   }
 
 variable "terraformerClientSecretName" {
   type        = string
   sensitive   = true
-  description = "Client secret of the service principal used by Terraform to deploy resources."
+  description = "Key vault secret name for Terraform service principal client secret."
+  }
+## Data Lake Authentication For Reading And Writing Files
+variable "datalakeClientIdName" {
+  type        = string
+  sensitive   = true
+  description = "Key vault secret name for the data lake service principal client ID."
+  }
+variable "datalakeClientSecretName" {
+  type        = string
+  sensitive   = true
+  description = "Key vault secret name for the data lake service principal client secret."
+  }
+# OTHER DATA
+## Resource Group Configuration Details
+## A distinct resource group dedicated to a a fictitious data science project for instance.
+variable "projectRgName" {
+  type        = string
+  sensitive   = true
+  description = "Name of the resource group dedicated to the fictitious project."
   }
 
-variable "ResourceGroupName" {
-  description = "Name of the new resource group"
+variable "projectResourcesLocation" {
   type        = string
-  default     = "NewResourceGroup"
- }
+  sensitive   = true
+  description = "Geographic location for deploying the project's resources."
+  }
 
-variable "location" {
-  description = "Azure region for deployment"
+## Data Lake Configuration Details (only relevant one. For others, see terraform files)
+variable "projectDatalakeName" {
   type        = string
-  default     = "North Europe"
+  sensitive   = true
+  description = "Name of the data lake dedicated to the project."
+  }
+variable "projectDatalakeContainerName" {
+  type        = string
+  sensitive   = true
+  description = "Name of the storage container within the project's data lake."
+  }
+variable "projectFlatFilesDirectoryName" {
+  type        = string
+  sensitive   = true
+  description = "Name of the directory within the storage container for flat files."
+  }
+variable "projectParquetFilesDirectoryName" {
+  type        = string
+  sensitive   = true
+  description = "Name of the directory within the storage container for parquet files."
   }
