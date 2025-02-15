@@ -44,12 +44,13 @@ provider "azurerm" {
 
   # Authentication strings (credentials)
   tenant_id       = var.tenantID
-  client_id       = data.azurerm_key_vault_secret.TerraformerID.value
-  client_secret   = data.azurerm_key_vault_secret.TerraformerSecret.value
+  client_id       = data.azurerm_key_vault_secret.KeyperSecrets["TerraformerID"].value
+  client_secret   = data.azurerm_key_vault_secret.KeyperSecrets["TerraformerSecret"].value
   subscription_id = var.subscriptionID
 
   features {}
   }
+
 ## Provider for password generation
 provider "random" {
   alias = "passwordGenerator"

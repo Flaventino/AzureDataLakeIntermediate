@@ -6,15 +6,13 @@ data "azurerm_key_vault" "Keyper"{
   }
 
 # KEY VAULT SECRETS RETRIEVAL
-data "azurerm_key_vault_secret" "TerraformerID" {
+data "azurerm_key_vault_secret" "KeyperSecrets" {
+  # Authentication
   provider     = azurerm.keyvault
-  name         = var.terraformerClientIdName
   key_vault_id = data.azurerm_key_vault.Keyper.id
-  }
-data "azurerm_key_vault_secret" "TerraformerSecret" {
-  provider     = azurerm.keyvault
-  name         = var.terraformerClientSecretName
-  key_vault_id = data.azurerm_key_vault.Keyper.id
+  # Secrets retrieval
+  for_each     = local.kv_secret_names_map
+  name         = each.value
   }
 
 # PROJECT RESOURCE GROUP DEPLOYMENT
@@ -26,19 +24,15 @@ resource "azurerm_resource_group" "projectResourceGroup" {
 
 # PROJECT DATA LAKE DEPLOYMENT
 module "DatalakeSetup" {
-  providers                = {
-    azurerm = azurerm.terraformer
-    }
-  # Module variables
-  ## Main variables
+  # Deployment constraints
+  providers                = {azurerm = azurerm.terraformer}
+  depends_on               = [azurerm_resource_group.projectResourceGroup]
+  # Main module variables
   source                           = "./modules/DatalakeSetup"
   projectRgName                    = var.projectRgName
   projectDatalakeName              = var.projectDatalakeName
   projectResourcesLocation         = var.projectResourcesLocation
   projectDatalakeContainerName     = var.projectDatalakeContainerName
-  ## Name list of directories to create in the data lake
-  # projectFlatFilesDirectoryName    = var.projectFlatFilesDirectoryName
-  # projectParquetFilesDirectoryName = var.projectParquetFilesDirectoryName
-  projectDirectoryNames           = [var.projectFlatFilesDirectoryName,var.projectParquetFilesDirectoryName]
-  depends_on = [ azurerm_resource_group.projectResourceGroup ]
+  # Name list of directories to create in the data lake
+  projectDirectoryNames            = local.project_directory_name_list
   }
