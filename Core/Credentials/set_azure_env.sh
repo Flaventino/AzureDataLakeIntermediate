@@ -33,9 +33,13 @@ export "TF_VAR_keyvaultClientID=${KEYVAULT_CLIENT_ID}"
 export "TF_VAR_keyvaultClientSecret=${KEYVAULT_CLIENT_SECRET}"
 
 ## EXPORT AUXILIARY CREDENTIALS (Secret names securely stored in Key Vault)
-### Terraform Authentication For Azure Resources Deployment
+### Terraform Authentications For Azure Resources Deployment
+#### Service principal with 'contributor' role on current active subscription
 export "TF_VAR_terraformerClientIdName=${TERRAFORMER_CLIENT_ID_NAME}"
 export "TF_VAR_terraformerClientSecretName=${TERRAFORMER_CLIENT_SECRET_NAME}"
+#### Service principal with 'application administrator' role on Azure active directory
+export "TF_VAR_spDeployerClientIdName=${SP_DEPLOYER_CLIENT_ID_NAME}"
+export "TF_VAR_spDeployerClientSecretName=${SP_DEPLOYER_CLIENT_SECRET_NAME}"
 ### Data Lake Authentication For Reading And Writing Files
 export "TF_VAR_datalakeClientIdName=${DATALAKE_CLIENT_ID_NAME}"
 export "TF_VAR_datalakeClientSecretName=${DATALAKE_CLIENT_SECRET_NAME}"
