@@ -52,6 +52,18 @@ variable "terraformerClientSecretName" {
   sensitive   = true
   description = "Key vault secret name for Terraform service principal client secret."
   }
+
+variable "spDeployerClientIdName" {
+  type        = string
+  sensitive   = true
+  description = "Key vault secret name for service principal client ID with 'application administrator' role on Azure active directory."
+  }
+
+variable "spDeployerClientSecretName" {
+  type        = string
+  sensitive   = true
+  description = "Key vault secret name for service principal client secret with 'application administrator' role on Azure active directory."
+  }
 ## Data Lake Authentication For Reading And Writing Files
 variable "datalakeClientIdName" {
   type        = string

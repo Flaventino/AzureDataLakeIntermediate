@@ -14,11 +14,11 @@ terraform {
         source  = "hashicorp/azurerm"
         version = "~>3.0"
         }
-      # Provider For Random Values Generation (Used for srvice principals secrets)
-      random = {
-        source  = "hashicorp/random"
-        version = "~>3.0"
-        }
+      # # Provider For Random Values Generation (Used for srvice principals secrets)
+      # random = {
+      #   source  = "hashicorp/random"
+      #   version = "~>3.0"
+      #   }
       }
   }
 
@@ -37,8 +37,8 @@ provider "azurerm" {
   features {}
   }
 
-## Provider for subscription-level resource deployment
-## >>> Works Uses a service principal with the 'Contributor' role at the subscription level.
+## Provider for subscription-level resources deployment
+## >>> Works using a service principal with the 'Contributor' role at the subscription level.
 provider "azurerm" {
   alias           = "terraformer"
 
@@ -51,7 +51,18 @@ provider "azurerm" {
   features {}
   }
 
-## Provider for password generation
-provider "random" {
-  alias = "passwordGenerator"
+# ## Provider for password generation
+# provider "random" {
+#   alias = "passwordGenerator"
+#   }
+
+## Provider for active-directory-level resources deployment
+## >>> Works using a service principal with the 'Application Administrator' role at the active directory level.
+provider "azuread" {
+  alias           = "service_principal_deployer"
+
+  # Authentication strings (credentials)
+  tenant_id       = var.tenantID
+  client_id       = data.azurerm_key_vault_secret.KeyperSecrets["SpDeployerID"].value
+  client_secret   = data.azurerm_key_vault_secret.KeyperSecrets["SpDeployerSecret"].value
   }
