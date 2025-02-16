@@ -23,11 +23,13 @@ files transfert function to move files from the web scraping machine (either a l
 
 ## Requirements
 ### Azure resources & services
-* Two service principals each one with its own configured secret.
+* Three service principals each one with its own configured secret.
     + One in charge to secure keyvault access and querrying.<br>
     To do so, ensure yourself to go to the "access policies" section of the keyvault<br>
     in order to grant "get" and "set" accesses only of this service principal over the keyvault.
-    You also need to give the service principal a "reader" role onto the keyvault. This is defined on "Access Control (IAM)" of the keyvault. 
+    You also need to give the service principal a "reader" role onto the keyvault. This is defined on "Access Control (IAM)" of the keyvault.
+    + One for subscription resources management (deployment & deletion)
+    + One for active directory resources management (deployment & deletion of service principals)
     + One for monitoring secure access to the data lake.
     So, once the service principal is in place, do not forget to give it a "Storage Blob Data Contributor" role.
     To do so, simply go to the datalake, under "Access control (IAM)", select "add" then the role and select the service principal. 
@@ -71,8 +73,10 @@ files transfert function to move files from the web scraping machine (either a l
             - Notice that only lower case alphanumeric characters and hyphens are allowed.
         + `DATALAKE_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-client-secret>`
             - The secret associated with the service principal for authenticating write access to your datalake.<br>`
-        + `TERRAFORM_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id-dedicated-to-resources-deployment>`
-        + `TERRAFORM_CLIENT_SECRET_NAME = 'terraform2'`
+        + `TERRAFORM_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id-dedicated-to-resources-deployment-on-the-subscription>`
+        + `TERRAFORM_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-application-secret-dedicated-to-resources-deployment-on-the-subscription>`
+        + `SP_DEPLOYER_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id-dedicated-to-resources-deployment-on-the-azure-active-directory>`
+        + `SP_DEPLOYER_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-application-secret-dedicated-to-resources-deployment-on-azure-active_directory>`
 
 While it is never mandatory to work with a virtual environment,<br>
 I personally prefer to do it in order to manage python libraries & dependencies more easily and reliably with poetry.<br>
