@@ -26,70 +26,60 @@ resource "azurerm_resource_group" "projectResourceGroup" {
 module "DatalakeSetup" {
   # Deployment constraints
   providers                = {azurerm = azurerm.terraformer}
-  depends_on               = [azurerm_resource_group.projectResourceGroup]
+  depends_on               = [azurerm_resource_group.projectResourceGroup,
+                              azuread_service_principal.datalake_monitor_sp
+                             ]
   # Main module variables
-  source                           = "./modules/DatalakeSetup"
-  projectRgName                    = var.projectRgName
-  projectDatalakeName              = var.projectDatalakeName
-  projectResourcesLocation         = var.projectResourcesLocation
-  projectDatalakeContainerName     = var.projectDatalakeContainerName
+  source                       = "./modules/DatalakeSetup"
+  projectRgName                = var.projectRgName
+  projectDatalakeName          = var.projectDatalakeName
+  projectResourcesLocation     = var.projectResourcesLocation
+  projectDatalakeContainerName = var.projectDatalakeContainerName
   # Name list of directories to create in the data lake
-  projectDirectoryNames            = local.project_directory_name_list
+  projectDirectoryNames        = local.project_directory_name_list
+  servicePrincipalID           = azuread_service_principal.datalake_monitor_sp.object_id
   }
 
-
-
-
-# data "azuread_client_config" "current" {
-#   provider     = azuread.terraformer
-# }
+# DEPLOYMENT OF THE SERVICE PRINCIPAL THAT WILL MONITOR THE DATA LAKE ACCESS
+## Creates first a new `app registration` (exactly as we would do on the portal)
 resource "azuread_application" "datalake_monitor" {
   provider     = azuread.service_principal_deployer
   display_name = "datalake-monitor-sp"
-  # owners       = [data.azuread_client_config.current.object_id]
   }
 
-# resource "azuread_service_principal" "datalake_monitor" {
-#   provider     = azuread.terraformer
-#   client_id    = azuread_application.datalake_monitor.client_id
-#   }
+## Creates a password for the new app registration created right above
+resource "azuread_application_password" "datalake_monitor_sp_secret" {
+  provider     = azuread.service_principal_deployer
+  display_name = "datalake-monitor-secret"
+  application_id = azuread_application.datalake_monitor.id
+  }
 
-#   # Service Principal Password
-# resource "azuread_service_principal_password" "datalake_monitor" {
-#   provider             = azuread.terraformer
-#   service_principal_id = azuread_service_principal.datalake_monitor.id
-#   }
+## Finally creates the required service principal (for datalake secure access purpose)
+resource "azuread_service_principal" "datalake_monitor_sp" {
+  provider  = azuread.service_principal_deployer
+  client_id = azuread_application.datalake_monitor.client_id
+  }
 
-# # Key Vault Secret (Optional for storing the secret securely)
-# resource "azurerm_key_vault_secret" "datalake_monitor_id" {
-#   provider     = azurerm.keyvault
-#   key_vault_id = data.azurerm_key_vault.Keyper.id
+# SECURE STORAGE OF SERVICE PRINCIPAL CREDENTIALS
+resource "azurerm_key_vault_secret" "datalake_monitor_id" {
+  provider     = azurerm.keyvault
+  key_vault_id = data.azurerm_key_vault.Keyper.id
 
-#   # for_each = local.datalake_client_credentials
-#   # name         = each.key
-#   # value        = each.value
-#   name = var.datalakeClientIdName
-#   value = azuread_service_principal.datalake_monitor.id
-#   content_type = "blabla1"
-#   #attribute = "This secret contains the ${each.key} for the datalake_monitor service principal."
-# }
+  # for_each = local.datalake_client_credentials
+  # name         = each.key
+  # value        = each.value
+  name = var.datalakeClientIdName
+  value = azuread_application.datalake_monitor.id
+  content_type = "DatalakeClientId"
+  }
+resource "azurerm_key_vault_secret" "datalake_monitor_secret" {
+  provider     = azurerm.keyvault
+  key_vault_id = data.azurerm_key_vault.Keyper.id
 
-# resource "azurerm_key_vault_secret" "datalake_monitor_secret" {
-#   provider     = azurerm.keyvault
-#   key_vault_id = data.azurerm_key_vault.Keyper.id
-
-#   # for_each = local.datalake_client_credentials
-#   # name         = each.key
-#   # value        = each.value
-#   name = var.datalakeClientSecretName
-#   value = azuread_service_principal_password.datalake_monitor.value
-#   content_type = "blabla2"
-#   #attribute = "This secret contains the ${each.key} for the datalake_monitor service principal."
-# }
-
-# # Role Assignment for the Service Principal
-# resource "azurerm_role_assignment" "datalake_monitor_access" {
-#   scope                = azurerm_storage_account.your_datalake.id
-#   role_definition_name = "Storage Blob Data Contributor"
-#   principal_id         = azuread_service_principal.datalake_monitor.id
-# }
+  # for_each = local.datalake_client_credentials
+  # name         = each.key
+  # value        = each.value
+  name = var.datalakeClientSecretName
+  value = azuread_application_password.datalake_monitor_sp_secret.value
+  content_type = "DataLakeClientSecret"
+  }

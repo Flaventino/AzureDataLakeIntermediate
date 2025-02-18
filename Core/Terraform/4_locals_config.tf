@@ -13,9 +13,11 @@ locals {
         var.projectFlatFilesDirectoryName,
         var.projectParquetFilesDirectoryName
         ]
-    # Creates A Dictionary Of Secrets to Store in The Key Vault (set in `main.tf`)
+    # # Creates A Dictionary Of Secrets to Store in The Key Vault (set in `main.tf`)
     # datalake_client_credentials = {
-    #     "${var.datalakeClientIdName}"     = azuread_service_principal.datalake_monitor.id
-    #     "${var.datalakeClientSecretName}" = azuread_service_principal_password.datalake_monitor.value
+    #     "${var.datalakeClientIdName}"     = {"value" = azuread_application.datalake_monitor.id
+    #                                          "description" = "datalakeClientID"}
+    #     "${var.datalakeClientSecretName}" = {"value" = azuread_application_password.datalake_monitor_sp_secret.value
+    #                                          "description" = "datalakeClientSecret"}
     #     }
     }

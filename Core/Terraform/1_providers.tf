@@ -34,7 +34,13 @@ provider "azurerm" {
   client_secret   = var.keyvaultClientSecret
   subscription_id = var.subscriptionID
 
-  features {}
+  # Usefull features to add to the provider to enhance its default behavior.
+  features {
+    key_vault {
+      purge_soft_deleted_secrets_on_destroy = true
+      recover_soft_deleted_secrets          = false
+      }
+    }
   }
 
 ## Provider for subscription-level resources deployment

@@ -40,3 +40,10 @@ resource "azurerm_storage_data_lake_gen2_path" "containerDirectories" {
     filesystem_name      = azurerm_storage_container.rawWebDataContainer.name
     storage_account_id   = azurerm_storage_account.projectDataLake.id
     }
+
+# CONFIGURING DATA LAKE ACCESS CONTROL
+resource "azurerm_role_assignment" "datalake_monitor_access" {
+    scope                = azurerm_storage_account.projectDataLake.id
+    role_definition_name = "Storage Blob Data Contributor"
+    principal_id         = var.servicePrincipalID
+    }
