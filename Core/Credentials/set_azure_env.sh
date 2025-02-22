@@ -15,7 +15,7 @@ if [[ ! -f "$CREDS_FILE" ]]; then
     exit 1
 fi
 
-# LOAD CREDENTIALS INTO SHELL SESSION
+# LOAD CREDENTIALS & OTHER SENSITIVE INFO INTO SHELL SESSION FROM '.env' FILE
 source "$CREDS_FILE"
 
 # VARIABLE EXPORT SECTION
@@ -34,21 +34,26 @@ export "TF_VAR_keyvaultClientSecret=${KEYVAULT_CLIENT_SECRET}"
 
 ## EXPORT AUXILIARY CREDENTIALS (Secret names securely stored in Key Vault)
 ### Terraform Authentications For Azure Resources Deployment
-#### Service principal with 'contributor' role on current active subscription
+#### Service Principal With 'contributor' Role On Current Active Subscription
 export "TF_VAR_terraformerClientIdName=${TERRAFORMER_CLIENT_ID_NAME}"
 export "TF_VAR_terraformerClientSecretName=${TERRAFORMER_CLIENT_SECRET_NAME}"
-#### Service principal with 'application administrator' role on Azure active directory
+#### Service Principal With 'application administrator' Role On Azure Active Directory
 export "TF_VAR_spDeployerClientIdName=${SP_DEPLOYER_CLIENT_ID_NAME}"
 export "TF_VAR_spDeployerClientSecretName=${SP_DEPLOYER_CLIENT_SECRET_NAME}"
 ### Data Lake Authentication For Reading And Writing Files
 export "TF_VAR_datalakeClientIdName=${DATALAKE_CLIENT_ID_NAME}"
 export "TF_VAR_datalakeClientSecretName=${DATALAKE_CLIENT_SECRET_NAME}"
-## EXPORT OTHER DATA
-## Resource Group Configuration Details
+
+## EXPORT OTHER CONFIGURATION DATA
+## Project Dedicated Resource Group Configuration Details (data science project for instance)
 export "TF_VAR_projectRgName=${PROJECT_RESOURCE_GROUP_NAME}"
 export "TF_VAR_projectResourcesLocation=${PROJECT_RESOURCE_GROUP_LOCATION}"
-## Data Lake Configuration Details (only relevant one. For others, see terraform files)
+## Data Lake Configuration Details
 export "TF_VAR_projectDatalakeName=${DATALAKE_NAME}"
+export "TF_VAR_projectDatalakeClientName=${DATALAKE_CLIENT_NAME}"
 export "TF_VAR_projectDatalakeContainerName=${DATALAKE_CONTAINER_NAME}"
 export "TF_VAR_projectFlatFilesDirectoryName=${DATALAKE_DIRECTORY_NAME_FOR_FLAT_FILES}"
 export "TF_VAR_projectParquetFilesDirectoryName=${DATALAKE_DIRECTORY_NAME_FOR_PARQUET_FILES}"
+## Keyvault Secret Descriptions
+export "TF_VAR_datalakeClientIdNameDescription=${DATALAKE_CLIENT_ID_NAME_DESCRIPTION}"
+export "TF_VAR_datalakeClientSecretNameDescription=${DATALAKE_CLIENT_SECRET_NAME_DESCRIPTION}"
