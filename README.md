@@ -77,6 +77,8 @@ files transfert function to move files from the web scraping machine (either a l
         + `TERRAFORM_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-application-secret-dedicated-to-resources-deployment-on-the-subscription>`
         + `SP_DEPLOYER_CLIENT_ID_NAME     = <secret-name-under-which-you-enclosed-the-service-principal-application-id-dedicated-to-resources-deployment-on-the-azure-active-directory>`
         + `SP_DEPLOYER_CLIENT_SECRET_NAME = <secret-name-under-which-you-enclosed-the-service-principal-application-secret-dedicated-to-resources-deployment-on-azure-active_directory>`
+        + `DATALAKE_CLIENT_ID_NAME_DESCRIPTION = ....`
+        + `DATALAKE_CLIENT_SECRET_NAME_DESCRIPTION = ....`
 
 While it is never mandatory to work with a virtual environment,<br>
 I personally prefer to do it in order to manage python libraries & dependencies more easily and reliably with poetry.<br>
