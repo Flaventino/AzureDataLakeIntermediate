@@ -24,7 +24,8 @@ resource "azuread_service_principal" "Client" {
 # CLIENT CREDENTIALS OUTPUT
 output "Credentials" {
   sensitive = true
-  value     = {"appID" = sensitive(azuread_application.AppRegistration.id)
-               "appSecret" = sensitive(azuread_application_password.AppRegSecret.value)
-               "clientID" = sensitive(azuread_service_principal.Client.object_id)}
+  value     = {
+    "clientID" = sensitive(azuread_application.AppRegistration.client_id)
+    "clientSecret" = sensitive(azuread_application_password.AppRegSecret.value)
+    "clientObjectID" = sensitive(azuread_service_principal.Client.object_id)}
   }

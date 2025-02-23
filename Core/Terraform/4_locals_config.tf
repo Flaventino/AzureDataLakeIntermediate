@@ -12,10 +12,10 @@ locals {
     datalake_client_credentials = {
         "secret1" = [var.datalakeClientIdName,
                      var.datalakeClientIdNameDescription,
-                     sensitive(module.DatalakeClientSetup.Credentials["appID"])]
+                     sensitive(module.DatalakeClientSetup.Credentials["clientID"])]
         "secret2" = [var.datalakeClientSecretName,
                      var.datalakeClientSecretNameDescription,
-                     sensitive(module.DatalakeClientSetup.Credentials["appSecret"])]
+                     sensitive(module.DatalakeClientSetup.Credentials["clientSecret"])]
         }
 
     # Creates A Name List Of The Directories To Create In The Data Lake

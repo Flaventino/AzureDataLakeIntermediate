@@ -54,5 +54,5 @@ module "DatalakeSetup" {
   projectDatalakeContainerName = var.projectDatalakeContainerName
   # Name list of directories to create in the data lake
   projectDirectoryNames        = local.project_directory_name_list
-  servicePrincipalID           = sensitive(module.DatalakeClientSetup.Credentials["clientID"])
+  servicePrincipalID           = sensitive(module.DatalakeClientSetup.Credentials["clientObjectID"])
   }
