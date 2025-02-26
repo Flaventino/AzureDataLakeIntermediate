@@ -176,6 +176,7 @@ Data/
 
 # Project IDX files
 .idx/
+.vscode/
 
 ###### ADDITIONS SECTION FOR TERRAFORM
 # 🚀 Terraform State & Sensitive Files

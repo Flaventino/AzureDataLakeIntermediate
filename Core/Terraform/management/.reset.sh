@@ -16,11 +16,18 @@ echo ">>> All automatically created files and/or directories will be deleted."
 # GETS THE CURRENT LOCATION OF THE SCRIPT AS A FULL ABSOLUTE PATH
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")" # Gets full abs. path
 
+# GETS TERRAFORM BASE FOLDER
+BASE_DIR="$(dirname "$SCRIPT_DIR")"
+
 # DELETING DIRETORIES & FILES
-rm -rf "$SCRIPT_DIR/.terraform"
-rm -f  "$SCRIPT_DIR/.terraform.lock.hcl"
-rm -f  "$SCRIPT_DIR/terraform.tfstate"
-rm -f  "$SCRIPT_DIR/terraform.tfstate.backup"
+# rm -rf "$SCRIPT_DIR/.terraform"
+# rm -f  "$SCRIPT_DIR/.terraform.lock.hcl"
+# rm -f  "$SCRIPT_DIR/terraform.tfstate"
+# rm -f  "$SCRIPT_DIR/terraform.tfstate.backup"
+rm -rf "$BASE_DIR/.terraform"
+rm -f  "$BASE_DIR/.terraform.lock.hcl"
+rm -f  "$BASE_DIR/terraform.tfstate"
+rm -f  "$BASE_DIR/terraform.tfstate.backup"
 
 # LEAVING MESSAGE
 echo ">>> Reset done successfully!"

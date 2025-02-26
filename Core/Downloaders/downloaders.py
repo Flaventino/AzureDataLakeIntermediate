@@ -26,7 +26,7 @@ def download_country_data(country, dest_folder=None, max_file=None):
     """
 
     # INITIALIZATION & BASIC SETTINGS
-    urlset = parse_the_docstring() # Gets the list of urls (i.e. the main page)
+    urlset = parse_the_docstring() # Gets url list to scrap from the docstring 
 
     # DEFINES VALIDATION CRITERIA FOR UNDERLYING URLS
     # >> url prefix, file prefix (clean country name), target file extension
@@ -274,7 +274,3 @@ def set_destination_directory(path=None):
 
     # FUNCTION OUTPUT (i.e. absolute path to the destination folder)
     return folder
-
-
-#download_country_data('spain', max_file=3)
-#download_amazon_products_data(dest_folder=None)

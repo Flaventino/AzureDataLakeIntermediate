@@ -1,6 +1,5 @@
 import os, inspect, re
 
-# HELPER FUNCTIONS
 def get_file_paths(path):
     """
     Given a path, returns a python list of absolute file paths inside target.
@@ -21,7 +20,7 @@ def get_file_paths(path):
         paths.append(path)
     elif os.path.isdir(path):
         # LIST ALL ITEMS IN THE DIRECTORY
-        paths = [os.path.join(filename) for filename in os.listdir(path)]
+        paths = [os.path.join(path, filename) for filename in os.listdir(path)]
         # KEEPS FULL PATHS FOR ALL ITEMS BEING FILES EXCLUSIVELY
         paths = [path for path in paths if os.path.isfile(path)]
 

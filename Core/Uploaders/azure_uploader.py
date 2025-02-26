@@ -18,7 +18,9 @@ def upload_file(file_path, container, dir_path=None):
     """
 
     # INITIALIZATION & BASIC SETTINGS
-    datalake_url = f"https://{getenv('DATALAKE_NAME')}.dfs.core.windows.net/"
+    dl_name = getenv("DATALAKE_NAME")
+    location =  f'{dl_name}/{container}/{dir_path if dir_path else ""}'
+    datalake_url = f"https://{dl_name}.dfs.core.windows.net/"
     datalake_creds = get_datalake_credentials()
 
     # IMPELEMENTS DATALAKE CONNECTION INFO
@@ -30,10 +32,11 @@ def upload_file(file_path, container, dir_path=None):
     client = client.get_directory_client(dir_path) if dir_path else client
 
     # TRANSFERING FILE(S) TO THE REQUIRED DATALAKE LOCATION (i.e. upload)
-    for path in get_file_paths(file_path):
+    for count, path in enumerate(get_file_paths(file_path), start=1):
         blob = open(path, "rb").read()
         filename = os.path.basename(path)
         client.get_file_client(filename).upload_data(blob, overwrite=True)
 
-
-upload_file('/home/user/AzureDataLakeIntermediate', 'data', dir_path=None)
+    # FUNCTION FEEDBACK TO LOG
+    print("\033[K", end="")                              # Clear the first line
+    print(f"\nUpload complete.\n>>> {count} files uploaded in: {location}")

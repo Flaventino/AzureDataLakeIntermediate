@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "projectDataLake" {
 
     # Secure access enforcement
     https_traffic_only_enabled = true
-
+    
     # Performance & redundancy settings (i.e. Data lake capability)
     access_tier                = "Cool"     # 'cold' means less frequent accessed data.
     account_tier               = "Standard" # Standard storage (cheaper in big data scenarios)

@@ -9,7 +9,7 @@
 # INITIALIZATION & BASIC SETTINGS
 CREDS_FILE="$(dirname "${BASH_SOURCE[0]}")/.env"  # Gets full path to .env file
 
-# CHECKING IF THE PATH IS POINTING TO A FILE AND NOT SIMPLY TO A DIRECTCORY
+# CHECKING IF THE 'CREDS_FILE' PATH IS POINTING TO A FILE AND NOT A DIRECTCORY
 if [[ ! -f "$CREDS_FILE" ]]; then
     echo "Error: .env file not found at $CREDS_FILE"
     exit 1
@@ -57,3 +57,10 @@ export "TF_VAR_projectParquetFilesDirectoryName=${DATALAKE_DIRECTORY_NAME_FOR_PA
 ## Keyvault Secret Descriptions
 export "TF_VAR_datalakeClientIdNameDescription=${DATALAKE_CLIENT_ID_NAME_DESCRIPTION}"
 export "TF_VAR_datalakeClientSecretNameDescription=${DATALAKE_CLIENT_SECRET_NAME_DESCRIPTION}"
+
+# ===== ENVIRONMENT SETUP COMPLETE MESSAGE =====
+if [[ ! ("$1" == "--silent" || "$1" == "-s") ]]; then
+    msg="Azure credentials & Terraform env variables successfully exported!"
+    printf '\n%.0s' {2}
+    printf '\e[92m%s\e[0m\n\n' "$msg"
+fi
