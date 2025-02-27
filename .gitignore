@@ -160,3 +160,50 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+
+
+
+
+
+
+#----------- CUSTOM ADDITIONS OVER TIME ---------------------------------------
+# Temporary files and/or utilities not to be tracked
+.backup/
+
+# Data files not to be tracked
+Data/
+
+# Project IDX files
+.idx/
+.vscode/
+
+###### ADDITIONS SECTION FOR TERRAFORM
+# 🚀 Terraform State & Sensitive Files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*_override.tf
+*_override.tf.json
+
+# 🚀 Terraform Cache & Modules
+.terraform/
+**/.terraform/modules/
+.terraform.lock.hcl
+
+# 🚀 Terraform Plan & Logs
+*.plan
+crash.log
+terraform.log
+
+# 🚀 Terraform Remote Backend & Config Files
+.terraformrc
+
+# 🚀 Environment & Secrets
+.env
+*.env
+setup.sh
+set_env.sh
+###### END OF ADDITIONS SECTION FOR TERRAFORM
